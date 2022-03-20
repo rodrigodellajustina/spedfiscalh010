@@ -49,7 +49,7 @@ class Sped:
             self._proc = self._path + ".proc"
 
         if not os.path.exists(self._dir):
-            print("O arquivo {0} não foi encontrado".format(self._dir))
+            print("O arquivo {0} não foi encontrado, faça upload na pasta tmp".format(self._dir))
             self._dir_exist = False
         else:
             self._dir_exist = True
