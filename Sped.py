@@ -15,12 +15,13 @@ class Sped:
     _proc  = ""
 
 
-    def __init__(self, val_entrada, val_saida, directory, file):
+    def __init__(self, val_entrada, val_saida, directory, file, fator):
         self._val_entrada = val_entrada
         self._val_saida   = val_saida
         self._dir = directory
         self._path = file
         self._dir_exist = False
+        self._fator = fator
         self.condir()
 
     def ratear(self, valorcelula):
@@ -81,6 +82,7 @@ class Sped:
 
             total = round(df2["total"].sum(), 2)
 
+
             while (total != sped._val_saida):
                 print("Total sem diferença ", total)
                 if sped._val_saida > total:
@@ -88,11 +90,13 @@ class Sped:
                 else:
                     diff = round(total - sped._val_saida, 2)
                 print("Caculando Diferença ", diff)
-                positionfirst = df2[df2['preco'] > diff].index.values[0]
+
+                positionfirst = df2[df2['preco'] > diff*self._fator].index.values[0]
+
                 if sped._val_saida > total:
-                    df2.at[positionfirst, "preco"] = df2["preco"][positionfirst] + diff
+                    df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff,2)
                 else:
-                    df2.at[positionfirst, "preco"] = df2["preco"][positionfirst] - diff
+                    df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] - diff,2)
                 df2['total'] = round(df2['preco'] * df2['qtd'], 2)
                 total = round(df2["total"].sum(), 2)
                 print("Total após a Diferença ", total)
