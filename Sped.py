@@ -69,8 +69,7 @@ class Sped:
             x = df.query('valor.str.contains("H010")', engine="python")
             df2 = pd.DataFrame()
             df2 = x['valor'].str.split('|', expand=True)
-            df2.columns = ['a1', 'a2', 'product', 'unidade', 'qtd', 'preco', 'total', 'n1', 'n2', 'descricao', 'ncm',
-                           'n3', 'n4']
+            df2.columns = ['a1', 'a2', 'product', 'unidade', 'qtd', 'preco', 'total', 'n1', 'n2', 'descricao', 'ncm','n3', 'n4']
             df2['preco'] = df2['preco'].str.replace(',', '.')
             df2['total'] = df2['total'].str.replace(',', '.')
             df2['qtd'] = df2['qtd'].str.replace(',', '.')
@@ -142,7 +141,7 @@ class Sped:
                     if "|H005|" in line:
                         novovalor = str(sped._val_saida)
                         novovalor = novovalor.replace(".", ",")
-                        fp.write('|H005|31122021|{0}|01|\n'.format(novovalor))
+                        fp.write('|H005|{1}|{0}|01|\n'.format(novovalor, line.split("|")[2]))
                     if "|H010|" not in line and '|H005|' not in line:
                         fp.write(line)
                     else:

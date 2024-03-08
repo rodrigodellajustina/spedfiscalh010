@@ -6,6 +6,7 @@
 # Node artifact files
 node_modules/
 dist/
+venv-spedfiscal010/
 
 # Compiled Java class files
 *.class
@@ -53,3 +54,4 @@ Thumbs.db
 *.proc
 *.csv
 *.txt
+*.sped
