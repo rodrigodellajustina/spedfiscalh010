@@ -90,12 +90,19 @@ class Sped:
                     diff = round(total - sped._val_saida, 2)
                 print("Caculando Diferença ", diff)
 
-                positionfirst = df2[df2['preco'] > diff*self._fator].index.values[0]
+                try:
+                    positionfirst = df2[df2['preco'] > diff*self._fator].index.values[0]
+                    if sped._val_saida > total:
+                        df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff, 2)
+                    else:
+                        df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] - diff, 2)
+                except Exception as e:
+                    print("Não encontrou valor rateando na quantidade")
+                    positionfirst = df2[df2['qtd'] == 1].index.values[0]
+                    df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff, 2)
 
-                if sped._val_saida > total:
-                    df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff,2)
-                else:
-                    df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] - diff,2)
+
+
                 df2['total'] = round(df2['preco'] * df2['qtd'], 2)
                 total = round(df2["total"].sum(), 2)
                 print("Total após a Diferença ", total)
