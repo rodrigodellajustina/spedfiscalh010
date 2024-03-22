@@ -60,7 +60,7 @@ class Sped:
             import pandas as pd
             print("Valor de Entrada do Sped " + str(sped._val_entrada))
             print("Valor de Saída do Sped " + str(sped._val_saida))
-            days_file = open(sped._dir, 'r', encoding='windows-1252')
+            days_file = open(sped._dir, 'r', encoding='windows-1252', errors='ignore')
             days = days_file.read()
 
             # Processamento
@@ -128,21 +128,21 @@ class Sped:
             filedata = filedata.replace('"', '')
             filedata = filedata.replace("'", '"')
 
-            with open(sped._h010r, 'w', encoding="windows-1252") as file:
+            with open(sped._h010r, 'w', encoding="windows-1252", errors="ignore") as file:
                 file.write(filedata)
 
             ##Formata o Arquivo...
 
-            with open(sped._dir, 'r', encoding='windows-1252') as fp:
+            with open(sped._dir, 'r', encoding='windows-1252', errors='ignore') as fp:
                 # read an store all lines into list
                 lines = fp.readlines()
 
-            with open(sped._h010r, 'r', encoding='windows-1252') as fp2:
+            with open(sped._h010r, 'r', encoding='windows-1252', errors='ignore') as fp2:
                 # read an store all lines into list
                 lines2 = fp2.readlines()
 
             # Arquivo 01
-            with open(sped._proc1, 'w', encoding='windows-1252') as fp:
+            with open(sped._proc1, 'w', encoding='windows-1252', errors='ignore') as fp:
                 # iterate each line
                 for number, line in enumerate(lines):
                     if "|H005|" in line:
@@ -155,14 +155,14 @@ class Sped:
                         break
 
             # Arquivo 02
-            with open(sped._proc2, 'w', encoding='windows-1252') as fp:
+            with open(sped._proc2, 'w', encoding='windows-1252', errors='ignore') as fp:
                 # iterate each line
                 for number, line in enumerate(lines2):
                     if "|H010|" in line:
                         fp.write(line)
 
             # Arquivo 03
-            with open(sped._proc3, 'w', encoding='windows-1252') as fp:
+            with open(sped._proc3, 'w', encoding='windows-1252', errors='ignore') as fp:
                 # iterate each line
                 liga = False
                 for number, line in enumerate(lines):
@@ -175,27 +175,27 @@ class Sped:
             # Merge com os Arquivos
             data = data2 = data3 = ""
 
-            with open(sped._proc1, encoding='windows-1252') as fp:
+            with open(sped._proc1, encoding='windows-1252', errors='ignore') as fp:
                 data1 = fp.read()
 
-            with open(sped._proc2, encoding='windows-1252') as fp:
+            with open(sped._proc2, encoding='windows-1252', errors='ignore') as fp:
                 data2 = fp.read()
 
             # Reading data from file2
-            with open(sped._proc3, encoding='windows-1252') as fp:
+            with open(sped._proc3, encoding='windows-1252', errors='ignore') as fp:
                 data3 = fp.read()
 
             data1 += data2
             data1 += data3
 
-            with open(sped._procrevision, 'w', encoding='windows-1252') as fp:
+            with open(sped._procrevision, 'w', encoding='windows-1252', errors='ignore') as fp:
                 fp.write(data1)
 
-            with open(sped._procrevision, 'r', encoding='windows-1252') as fp:
+            with open(sped._procrevision, 'r', encoding='windows-1252', errors='ignore') as fp:
                 # read an store all lines into list
                 lines = fp.readlines()
 
-            with open(sped._proc, 'w', encoding='windows-1252') as fp:
+            with open(sped._proc, 'w', encoding='windows-1252', errors='ignore') as fp:
                 for number, line in enumerate(lines):
                     if "|" in line:
                         fp.write(line)
