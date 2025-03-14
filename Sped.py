@@ -108,6 +108,8 @@ class Sped:
                         df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff, 2)
                 except Exception as e:
                     print("passou aqui")
+                    print(diff)
+                    print(self._fator)
                     print(e)
                     traceback.print_exc()
                     input("\nPressione ENTER para continuar...")
