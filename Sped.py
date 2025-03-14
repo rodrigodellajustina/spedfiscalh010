@@ -79,6 +79,9 @@ class Sped:
             df2["preco"] = round((sped._val_saida * (df2["preco"] * 100) / sped._val_entrada) / 100, 2)
             df2['total'] = round(df2['preco'] * df2['qtd'], 2)
 
+            df2["qtd"] = pd.to_numeric(df2["qtd"], errors="coerce").fillna(0).astype(np.float64)
+            df2["preco"] = pd.to_numeric(df2["preco"], errors="coerce").fillna(0).astype(np.float64)
+
             total = round(df2["total"].sum(), 2)
 
             while (total != sped._val_saida):
