@@ -103,9 +103,10 @@ class Sped:
                         positionfirst = df2[df2['qtd'] == 1].index.values[0]
                         df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff, 2)
                 except Exception as e:
+                    print("passou aqui")
+                    print(e)
                     print("Não encontrou valor rateando na quantidade")
                     positionfirst = df2[df2['qtd'] == 1].index.values[0]
-                    print("passou aqui")
                     df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff, 2)
 
 
