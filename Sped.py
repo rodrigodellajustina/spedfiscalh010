@@ -1,6 +1,8 @@
 import pandas as pd
 import os.path
 import numpy as np
+import traceback
+
 class Sped:
     _val_entrada = 0
     _val_saida   = 0
@@ -107,6 +109,8 @@ class Sped:
                 except Exception as e:
                     print("passou aqui")
                     print(e)
+                    traceback.print_exc()
+                    input("\nPressione ENTER para continuar...")
                     print("Não encontrou valor rateando na quantidade")
                     positionfirst = df2[df2['qtd'] == 1].index.values[0]
                     df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff, 2)
