@@ -81,7 +81,8 @@ class Sped:
             df2["preco"] = round((sped._val_saida * (df2["preco"] * 100) / sped._val_entrada) / 100, 2)
             df2['total'] = round(df2['preco'] * df2['qtd'], 2)
 
-            print(df2.dtypes)
+            #imprimir tipos se necessario depurar
+            #print(df2.dtypes)
 
             total = round(df2["total"].sum(), 2)
 
