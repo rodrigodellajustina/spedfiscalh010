@@ -1,6 +1,6 @@
 import pandas as pd
 import os.path
-
+import numpy as np
 class Sped:
     _val_entrada = 0
     _val_saida   = 0
@@ -79,6 +79,9 @@ class Sped:
             df2["preco"] = round((sped._val_saida * (df2["preco"] * 100) / sped._val_entrada) / 100, 2)
             df2['total'] = round(df2['preco'] * df2['qtd'], 2)
 
+            df2["preco"].astype(np.float64)
+            df2["total"].astype(np.float64)
+
             total = round(df2["total"].sum(), 2)
 
 
@@ -104,6 +107,7 @@ class Sped:
                 except Exception as e:
                     print("Não encontrou valor rateando na quantidade")
                     positionfirst = df2[df2['qtd'] == 1].index.values[0]
+                    print("passou aqui")
                     df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff, 2)
 
 
