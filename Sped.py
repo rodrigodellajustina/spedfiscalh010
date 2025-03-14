@@ -109,7 +109,9 @@ class Sped:
                 except Exception as e:
                     print("passou aqui")
                     print(diff)
+                    print(type(diff))
                     print(self._fator)
+                    print(type(self._fator))
                     print(e)
                     traceback.print_exc()
                     input("\nPressione ENTER para continuar...")
