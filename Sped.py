@@ -79,11 +79,7 @@ class Sped:
             df2["preco"] = round((sped._val_saida * (df2["preco"] * 100) / sped._val_entrada) / 100, 2)
             df2['total'] = round(df2['preco'] * df2['qtd'], 2)
 
-            df2["preco"].astype(np.float64)
-            df2["total"].astype(np.float64)
-
             total = round(df2["total"].sum(), 2)
-
 
             while (total != sped._val_saida):
                 print("Total sem diferença ", total)
@@ -92,6 +88,8 @@ class Sped:
                 else:
                     diff = round(total - sped._val_saida, 2)
                 print("Calculando Diferença ", diff)
+
+                diff = np.clip(diff, -1e6, 1e6)
 
                 try:
                     if self._fator != 3:
