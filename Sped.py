@@ -111,8 +111,8 @@ class Sped:
                         positionfirst = df2[df2['qtd'] == 1].index.values[0]
                         df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff, 2)
                 except Exception as e:
-                    '''
-                    deixar aqui pois para depurar no colab é mais fácil com input ;)
+
+                    #deixar aqui pois para depurar no colab é mais fácil com input ;)
                     print("passou aqui")
                     print(diff)
                     print(type(diff))
@@ -121,7 +121,7 @@ class Sped:
                     print(e)
                     traceback.print_exc()
                     input("\nPressione ENTER para continuar...")
-                    '''
+
                     print("Não encontrou valor rateando na quantidade")
                     positionfirst = df2[df2['qtd'] == 1].index.values[0]
                     df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff, 2)
