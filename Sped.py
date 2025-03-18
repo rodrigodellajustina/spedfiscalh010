@@ -99,7 +99,9 @@ class Sped:
                 try:
                     if int(self._fator) != 3:
                         if sped._val_saida > sped._val_entrada:
-                            positionfirst = df2.query("preco > @diff * @self._fator and qtd == 1").index.values[0]
+                            fator = float(self._fator)
+                            diff  = float(diff)
+                            positionfirst = df2.query("preco > @diff * @fator and qtd == 1").index.values[0]
                         else:
                             positionfirst = df2[df2['preco'] > diff*int(self._fator)].index.values[0]
                         if sped._val_saida > total:
