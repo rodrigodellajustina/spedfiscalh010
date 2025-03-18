@@ -98,7 +98,10 @@ class Sped:
 
                 try:
                     if int(self._fator) != 3:
-                        positionfirst = df2[df2['preco'] > diff*int(self._fator)].index.values[0]
+                        if sped._val_saida > sped._val_entrada:
+                            positionfirst = df2.query("preco > @diff * @self._fator and qtd == 1").index.values[0]
+                        else:
+                            positionfirst = df2[df2['preco'] > diff*int(self._fator)].index.values[0]
                         if sped._val_saida > total:
                             df2.at[positionfirst, "preco"] = round(df2["preco"][positionfirst] + diff, 2)
                         else:
