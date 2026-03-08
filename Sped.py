@@ -76,7 +76,7 @@ class Sped:
             df = pd.DataFrame(lt, columns=["valor"])
             x = df.query('valor.str.contains("H010")', engine="python")
             h020 = df.query('valor.str.contains("^\\|H020\\|")', engine="python")
-            print(h020)
+            #print(h020)
             df2 = pd.DataFrame()
             df2 = x['valor'].str.split('|', expand=True)
             df2.columns = ['a1', 'a2', 'product', 'unidade', 'qtd', 'preco', 'total', 'n1', 'n2', 'descricao', 'ncm','n3', 'n4']
