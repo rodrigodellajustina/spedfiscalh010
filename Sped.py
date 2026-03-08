@@ -9,10 +9,12 @@ class Sped:
     _dir  = ""
     _path = ""
     _h010  = ""
+    _h020   = ""
     _h010r = ""
     _proc1 = ""
     _proc2 = ""
     _proc3 = ""
+    _fsaida = ""
     _procrevision = ""
     _proc  = ""
 
@@ -35,19 +37,23 @@ class Sped:
         if self._dir != "":
             self._dir   = "/"+(self._dir + "/" + self._path)
             self._h010  = "/tmp/" + "h010.txt"
+            self._h020 = "/tmp/" + "h020.txt"
             self._h010r = "/tmp/" + "h010r.txt"
             self._proc1 = "/tmp/" + "proc1.txt"
             self._proc2 = "/tmp/" + "proc2.txt"
             self._proc3 = "/tmp/" + "proc3.txt"
+            self._fsaida = "/tmp/" + "saida.txt"
             self._procrevision = "/tmp/" + "procrevision.txt"
             self._proc   =  "/tmp/" + self._path+".proc"
         else:
             self._dir =  self._path
-            self._h010 =  "h010.txt"
+            self._h010  = "h010.txt"
+            self._h020  = "h020.txt"
             self._h010r = "h010r.txt"
             self._proc1 = "proc1.txt"
             self._proc2 = "proc2.txt"
             self._proc3 = "proc3.txt"
+            self._fsaida = "saida.txt"
             self._procrevision = "procrevision.txt"
             self._proc = self._path + ".proc"
 
@@ -69,6 +75,8 @@ class Sped:
             lt = days.split("\n")
             df = pd.DataFrame(lt, columns=["valor"])
             x = df.query('valor.str.contains("H010")', engine="python")
+            h020 = df.query('valor.str.contains("^\\|H020\\|")', engine="python")
+            print(h020)
             df2 = pd.DataFrame()
             df2 = x['valor'].str.split('|', expand=True)
             df2.columns = ['a1', 'a2', 'product', 'unidade', 'qtd', 'preco', 'total', 'n1', 'n2', 'descricao', 'ncm','n3', 'n4']
@@ -149,12 +157,35 @@ class Sped:
                             df2['preco'] + "|" + df2['total'] + "|0|" + "|" + df2['descricao'].str.replace('"',
                                                                                                            "'") + "|" + \
                             df2['ncm'] + "|0|"
+            ### len(h020)
+            if len(h020) > 0:
+                h020["valor"].to_csv(sped._h020, header=None, index=False)
 
             # Gerando arquivos temporários
             df2["export"].to_csv(sped._h010, header=None, index=False)
 
             with open(sped._h010, 'r', encoding="utf-8", errors="ignore") as file:
                 filedata = file.read()
+
+            if len(h020) > 0:
+                with open(sped._h010, "r", encoding="utf-8") as f1:
+                    h010 = f1.readlines()
+
+                with open(sped._h020, "r", encoding="utf-8") as f2:
+                    h020 = f2.readlines()
+
+                resultado = []
+
+                for a, b in zip(h010, h020):
+                    resultado.append(a.strip())
+                    resultado.append(b.strip())
+
+                with open(sped._fsaida, "w", encoding="utf-8") as f:
+                    for linha in resultado:
+                        f.write(linha + "\n")
+
+                with open(sped._fsaida, 'r', encoding="utf-8", errors="ignore") as file:
+                    filedata = file.read()
 
             filedata = filedata.replace('"', '')
             filedata = filedata.replace("'", '"')
@@ -189,7 +220,7 @@ class Sped:
             with open(sped._proc2, 'w', encoding='windows-1252', errors='ignore') as fp:
                 # iterate each line
                 for number, line in enumerate(lines2):
-                    if "|H010|" in line:
+                    if "|H010|" in line or "|H020|" in line:
                         fp.write(line)
 
             # Arquivo 03
